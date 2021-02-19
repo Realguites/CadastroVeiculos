@@ -1,0 +1,74 @@
+1- Introdução
+
+	Desenvolvimento de  de cadastro de veíclos utilizando Java(spring) para back-end e React para front-end. 
+	Utilizou-se várias tecnologias atuais para o desenvolvimento, como Hibernate, Jpa, Spring Data. O banco utilizado foi o PostgreSQL, sendo uma excelente opção para armazenamento de dados. 
+	Um veículo possui 8 atributos: (ID, nome, marca, ano, descrição, se foi vendido, data de criação e data de atualização).
+
+2- Back-end
+
+	 O back-end da aplicação foi desenvolvido utilizando o padrão Rest, consumindo e produzindo dados em JSON, uma forma leve e garantida de transferência de dados entre sistemas. A aplicação consiste em 11 endPoints, esses dividos em 5 verbos, são eles: GET, POST, PUT, DELETE,PATCH, todos implementados na camada de Resource. São eles:
+
+@GetMapping(value = "/{id}")
+public ResponseEntity<Veiculo> find(@PathVariable Integer id)
+
+Método responsável por retornar o veículo pelo id(PK).
+
+public ResponseEntity<List<Veiculo>> findAll()
+
+Retorna todos os veículos cadastrados na aplicação.
+
+public ResponseEntity<Void> insert(@RequestBody Veiculo veiculo)
+
+Insere um novo veículo na aplicação. A aplicação aceitará somente as marcas conhecidas (em construção). Para tal ação, o sistema utilizará uma hash para percorrer de forma constante O(1) até encontrar a marca, caso não ache, o veículo não será aceito.
+
+@PutMapping(value = "/{id}")
+    public ResponseEntity<Void> update(@RequestBody Veiculo veiculo, @PathVariable Integer id) 
+
+Atualiza um veículo (todos os dados).
+
+@DeleteMapping(value = "/{id}")
+    public ResponseEntity<Veiculo> delete(@PathVariable Integer id)
+
+Deleta um veículo de acordo com seu ID passado como parâmetro.
+
+@GetMapping(value = "/marcas")
+    public List<Object[]> getMarcas() {
+
+Retorna todas as marcas e suas respectivas quantidades cadastradas na aplicação.
+
+    @GetMapping(value = "/novosVeiculos")
+public List<String> getNovosVeiculosSeteDias()
+
+Retorna todos os veículos cadastrados nos últimos 7 dias.
+
+    @GetMapping(value = "/naoVendidos")
+public long getQtdVeiculosNaoVendidos()
+
+Retorna o número de veículos que ainda não foram vendidos.
+
+    @GetMapping(value = "/decada")
+public List<Object[]> getAno()
+
+
+Retorna o número de veiculos correspondente a cada década.
+
+    @GetMapping(value = "/find/{q}")
+public ResponseEntity<List<Veiculo>> findByVeiculo(@PathVariable String q) 
+
+
+Retorna os veículos de acordo com a String passada pelo parâmetro q.
+
+@PatchMapping("/{id}")
+    public ResponseEntity<?> partialUpdateName(@RequestBody Veiculo veiculo, @PathVariable("id") Integer id)
+
+	Atualiza de forma parcial o veículo de acordo com o ID passado como parâmatro, não alterando os demais campos não passados via JSON.
+
+3- Front-end
+
+	Pela view, pode-se cadastrar um novo veículo, consultar dados, editar um veículo (em construção), excluir um veículo (em construção).
+
+Utilizou-se as dependências: 
+
+Axios: Para realizar as transações REST.
+Router: Utilizado para criar as rotas no projeto React.
+Bootstrap: Melhorar a estilização da página principal.
